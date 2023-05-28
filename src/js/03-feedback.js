@@ -4,6 +4,11 @@ const messageInput = document.querySelector('textarea[name="message"]');
 
 let storageObject = {};
 
+function setDefaultInput(inputType, inputName) {
+  document.querySelector(`${inputType}[name="${inputName}"]`).defaultValue =
+    JSON.parse(localStorage.getItem('feedback-form-state'))[inputName];
+}
+
 if (localStorage.getItem('feedback-form-state') === null) {
   storageObject = {
     email: '',
@@ -11,15 +16,10 @@ if (localStorage.getItem('feedback-form-state') === null) {
   };
 } else {
   storageObject = JSON.parse(localStorage.getItem('feedback-form-state'));
-}
 
-function setDefaultInput(inputType, inputName) {
-  document.querySelector(`${inputType}[name="${inputName}"]`).defaultValue =
-    JSON.parse(localStorage.getItem('feedback-form-state'))[inputName];
+  setDefaultInput('input', 'email');
+  setDefaultInput('textarea', 'message');
 }
-
-setDefaultInput('input', 'email');
-setDefaultInput('textarea', 'message');
 
 form.addEventListener(
   'input',
